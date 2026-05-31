@@ -4,19 +4,40 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    
     <!-- Підключення стилів -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css" />
 
     <title>Document</title>
   </head>
   <body>
-    <!-- Підключення FontAwesome для використання текстових іконок -->
-    <script
+
+    <body>
+      <header>
+        <h1><i class="fas fa-sticky-note"></i> Super notes </h1>
+      </header>
+      <main>
+        <div class="notes-grid" id="notes-container"></div>
+      </main>
+      <button id="open-modal-btn" class="fab-btn"><i class="fas fa-plus"></i></button>
+      <div id="note-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <input name="" placeholder="Введіть якийсь заголовок...." id="">
+          <textarea name="" id="" placeholder="Введіть якісь нотатки...."></textarea>
+          <div class="modal-actions">
+            <button id="save-note-btn">Зберегти</button>
+          </div>
+        </div>
+      </div>
+      <!-- Підключення FontAwesome для використання текстових іконок -->
+    <!-- <script
       src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
       integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
 
     <!-- Підключення jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
