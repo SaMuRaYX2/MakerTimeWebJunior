@@ -19,7 +19,7 @@ header {
 
 /* Форма створення нотатки */
 .modal{
-  display: flex;
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -28,7 +28,7 @@ header {
   height: 100%;
   align-items: center;
   justify-content: center;
-  background-color: #f1c40f;
+  background-color: #0000009a;
 }
 
 .modal-content{
@@ -38,10 +38,12 @@ header {
   width: 90%;
   max-width: 500px;
   position: relative;
-  box-shadow: 0 5px 25px rgba(48, 14, 14, 0.952);
+  box-shadow: 0 10px 50px rgba(43, 148, 27, 0.872);
   display: flex;
   flex-direction: column;
 }
+
+
 
 /* --- Плаваюча кнопка ПЛЮСИК --- */
 .fab-btn {
@@ -68,8 +70,69 @@ header {
 
 /* --- Спливаюче вікно (Модалка) --- */
 
+/* Кнопка закриння модального вікна close-btn */
+
+/* .close-btn{
+  position: absolute;
+  top: -40px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 15);
+  color: #fff;
+  transition: background-color 0.2s,  transform 0.2s; 
+  line-height:  1;
+}
+
+.close-btn:hover{
+  background-color: rgba(0, 0, 0, 0.35);
+  transform: scale(1.2);
+} */
 
 
+.mac-controls{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.mac-btn{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: filter 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mac-btn i{
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+span.mac-minimize{
+  position: relative;
+}
+
+.mac-minimize i{
+  position: absolute;
+  top: 2.5px;
+  left: 51%;
+  transform: translateX(-50%);
+}
+
+.mac-close    { background-color: #ff5f57; }                       
+.mac-minimize { background-color: #febc2e; }                       
+.mac-maximize { background-color: #28c840; }     
+
+.mac-btn:hover { filter: brightness(0.85); }  
+                                                 
 
 .modal-content input, .modal-content textarea {
   border: none;
@@ -77,12 +140,12 @@ header {
   width: 100%;
   font-size: 16px;
   padding: 10px 0;
+  background-color: rgba(225, 255, 0, 0.639);
+  border-radius: 12px;
+  padding: 10px 25px 10px 15px;
 }
 
-.modal-content input#modal-title {
-  border: none; border-bottom: 1px solid #eee; outline: none;
-  font-size: 20px; font-weight: 500; padding: 10px 0; margin-bottom: 15px;
-}
+
 
 .modal-content textarea {
   border: none; outline: none; width: 100%; font-size: 16px; resize: none; min-height: 120px;
@@ -98,8 +161,8 @@ header {
   margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ccc;
 }
 
-.modal-list-item { display: flex; align-items: center; margin-bottom: 10px; }
-.modal-list-item input[type="text"] { border: none; border-bottom: 1px solid #ccc; outline: none; width: 100%; font-size: 16px; padding: 5px; }
+.modal-list-item { display: flex; align-items: baseline; margin-bottom: 10px; }
+.modal-list-item input[type="text"] { border: none; outline: none; width: 100%; font-size: 16px; padding: 5px 25px 5px 10px; }
 .modal-list-item .remove-item-btn { background: none; border: none; color: #e74c3c; font-size: 16px; margin-left: 10px; cursor: pointer; }
 #add-list-item-btn { background: none; border: none; color: #3498db; cursor: pointer; font-weight: 500; margin-top: 5px; text-align: left; }
 
@@ -113,8 +176,7 @@ header {
 .modal-content input {
   font-weight: 500;
   font-size: 20px;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .modal-content textarea {
@@ -125,10 +187,10 @@ header {
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
-/* #save-note-btn {
+#save-note-btn {
   background: #f1c40f;
   border: none;
   padding: 10px 20px;
@@ -136,11 +198,11 @@ header {
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
-} */
+}
 
-/* #save-note-btn:hover {
+#save-note-btn:hover {
   background: #f39c12;
-} */
+}
 
 .creator-actions {
   display: flex;
@@ -155,7 +217,7 @@ header {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
 }
 
 #add-btn:hover {

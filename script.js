@@ -77,8 +77,9 @@ $(document).ready(function() {
       let doneData = done ? 'true' : 'false';
       let itemHTML = `
           <div class="modal-list-item">
-              <input type="text" class="list-item-val" placeholder="Пункт завдання..." value="${text}" data-done="${doneData}">
-              <button type="button" class="remove-item-btn"><i class="fas fa-times"></i></button>
+            <i class="fas fa-dot-circle" style="color: rgb(0 131 244); margin-right: 10px"></i>
+            <input type="text" class="list-item-val" placeholder="Пункт завдання..." value="${text}" data-done="${doneData}">
+            <button type="button" class="remove-item-btn"><i class="fas fa-times"></i></button>
           </div>
       `;
       $('#list-items-container').append(itemHTML);
@@ -100,7 +101,7 @@ $(document).ready(function() {
   $(document).on('click', '.remove-item-btn', function() { $(this).closest('.modal-list-item').remove(); });
 
   // Закриття модалки
-  $('.close-btn').click(function() { $('.modal').css('display', 'none'); });
+  $('.mac-close').click(function() { $('.modal').css('display', 'none'); });
   $(window).click(function(event) { if ($(event.target).is('.modal')) $('.modal').css('display', 'none'); });
 
   // --- ЗБЕРЕЖЕННЯ ---

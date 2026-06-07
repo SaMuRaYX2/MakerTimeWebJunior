@@ -24,9 +24,21 @@
       <button id="open-modal-btn" class="fab-btn"><i class="fas fa-plus"></i></button>
       <div id="note-modal" class="modal">
         <div class="modal-content">
-          <span class="close-btn">&times;</span>
-          <input name="" placeholder="Введіть якийсь заголовок...." id="">
-          <textarea name="" id="" placeholder="Введіть якісь нотатки...."></textarea>
+          <div class="mac-controls">
+            <span class="mac-btn mac-close" id="mac-close" title="Закрити"><i class="fas fa-times"></i></span>
+            <span class="mac-btn mac-minimize" title="Згорнути"><i class="fas fa-window-minimize"></i></span>      
+            <span class="mac-btn mac-maximize" title="Розгорнути"><i class="fas fa-expand-alt"></i></span>
+          </div>
+          <button id="toggle-type-btn">                                    
+            <i class="fas fa-list-ul"></i> Зробити списком завдань         
+          </button> 
+          
+          <input name="" placeholder="Введіть якийсь заголовок...." id="modal-title">
+          <textarea name="" id="modal-text" placeholder="Введіть якісь нотатки...."></textarea>
+          <div id="modal-list" style="display:none;">                      
+            <div id="list-items-container"></div>                          
+            <button type="button" id="add-list-item-btn">+ Додати пункт</button>                                                       
+          </div>
           <div class="modal-actions">
             <button id="save-note-btn">Зберегти</button>
           </div>
