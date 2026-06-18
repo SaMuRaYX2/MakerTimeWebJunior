@@ -2,6 +2,7 @@ $(document).ready(function() {
   let notes = JSON.parse(localStorage.getItem('myNotes')) || [];
   let editingNoteId = null;
   let currentNoteType = 'text'; // За замовчуванням створюємо текст
+  let currentView = 'active';   // 'active' або 'archived'
 
   function saveToLocalStorage() {
       localStorage.setItem('myNotes', JSON.stringify(notes));
@@ -9,9 +10,25 @@ $(document).ready(function() {
 
   function renderNotes() {
       $('#notes-container').empty();
-      notes.forEach(function(note, index) {
-          let archiveClass = note.isArchived ? 'archived' : '';
-          
+
+      // Фільтруємо нотатки залежно від поточного виду
+      let filtered = notes.filter(function(note) {
+          return currentView === 'archived' ? note.isArchived : !note.isArchived;
+      });
+
+      // Якщо нотаток немає — показуємо повідомлення
+      if (filtered.length === 0) {
+          let emptyMsg = currentView === 'archived'
+              ? 'Архів порожній 📭'
+              : 'Нотаток ще немає. Натисни + щоб створити! 📝';
+          $('#notes-container').append('<p class="empty-msg">' + emptyMsg + '</p>');
+          return;
+      }
+
+      filtered.forEach(function(note) {
+          // Реальний індекс в масиві notes (не у відфільтрованому!)
+          let realIndex = notes.indexOf(note);
+
           // Формуємо вміст нотатки (текст або список)
           let contentHTML = '';
           if (note.type === 'list') {
@@ -21,7 +38,7 @@ $(document).ready(function() {
                   let strikeClass = item.done ? 'class="done"' : '';
                   contentHTML += `
                       <li>
-                          <input type="checkbox" class="list-checkbox" data-note="${index}" data-item="${itemIndex}" ${checked}>
+                          <input type="checkbox" class="list-checkbox" data-note="${realIndex}" data-item="${itemIndex}" ${checked}>
                           <span ${strikeClass}>${item.text}</span>
                       </li>
                   `;
@@ -31,15 +48,19 @@ $(document).ready(function() {
               contentHTML = `<div class="note-content-text">${note.text}</div>`;
           }
 
+          // Кнопка архіву: різна іконка та підказка залежно від стану
+          let archiveBtnTitle = note.isArchived ? 'Розархівувати' : 'Архівувати';
+          let archiveBtnIcon  = note.isArchived ? 'fa-inbox' : 'fa-archive';
+
           let noteHTML = `
-              <div class="note ${archiveClass}" data-id="${index}">
+              <div class="note" data-id="${realIndex}">
                   <h3>${note.title}</h3>
                   ${contentHTML}
                   <div class="note-footer">
                       <span>${note.date}</span>
                       <div class="note-actions">
                           <button class="edit-btn" title="Редагувати"><i class="fas fa-edit"></i></button>
-                          <button class="archive-btn" title="Архівувати"><i class="fas fa-archive"></i></button>
+                          <button class="archive-btn" title="${archiveBtnTitle}"><i class="fas ${archiveBtnIcon}"></i></button>
                           <button class="delete-btn" title="Видалити"><i class="fas fa-trash"></i></button>
                       </div>
                   </div>
@@ -107,7 +128,7 @@ $(document).ready(function() {
   // --- ЗБЕРЕЖЕННЯ ---
   $('#save-note-btn').click(function() {
       let titleVal = $('#modal-title').val().trim();
-      
+
       let newNoteData = {
           title: titleVal,
           type: currentNoteType,
@@ -130,7 +151,7 @@ $(document).ready(function() {
           newNoteData.items = items;
       }
 
-      if (editingNoteId !== null) { notes[editingNoteId] = newNoteData; } 
+      if (editingNoteId !== null) { notes[editingNoteId] = newNoteData; }
       else { notes.push(newNoteData); }
 
       saveToLocalStorage();
@@ -144,7 +165,7 @@ $(document).ready(function() {
       let note = notes[editingNoteId];
       resetModal();
       $('#modal-title').val(note.title);
-      
+
       if (note.type === 'list') {
           setNoteType('list');
           $('#list-items-container').empty();
@@ -165,17 +186,37 @@ $(document).ready(function() {
       renderNotes();
   });
 
+  // --- НАВІГАЦІЯ МІЖ НОТАТКАМИ ТА АРХІВОМ ---
+  $('#show-active-btn').click(function() {
+      currentView = 'active';
+      $(this).addClass('nav-active');
+      $('#show-archive-btn').removeClass('nav-active');
+      renderNotes();
+  });
+
+  $('#show-archive-btn').click(function() {
+      currentView = 'archived';
+      $(this).addClass('nav-active');
+      $('#show-active-btn').removeClass('nav-active');
+      renderNotes();
+  });
+
   // --- ВИДАЛЕННЯ ТА АРХІВУВАННЯ ---
   $(document).on('click', '.delete-btn', function() {
       notes.splice($(this).closest('.note').data('id'), 1);
-      saveToLocalStorage(); renderNotes();
+      saveToLocalStorage();
+      renderNotes();
   });
 
   $(document).on('click', '.archive-btn', function() {
       let noteId = $(this).closest('.note').data('id');
-      notes[noteId].isArchived = !notes[noteId].isArchived; 
-      saveToLocalStorage(); renderNotes();
+      notes[noteId].isArchived = !notes[noteId].isArchived;
+      saveToLocalStorage();
+      renderNotes();
   });
 
   renderNotes();
+
+
+  
 });
