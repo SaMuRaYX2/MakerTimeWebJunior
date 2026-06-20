@@ -216,7 +216,5 @@ $(document).ready(function() {
   });
 
   renderNotes();
-
-
   
 });
