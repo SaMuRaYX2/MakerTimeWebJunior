@@ -98,7 +98,7 @@ $(document).ready(function() {
       let doneData = done ? 'true' : 'false';
       let itemHTML = `
           <div class="modal-list-item">
-            <i class="fas fa-dot-circle" style="color: rgb(0 131 244); margin-right: 10px"></i>
+            <i class="fas fa-dot-circle" style="color: rgb(189, 218, 0); margin-right: 10px"></i>
             <input type="text" class="list-item-val" placeholder="Пункт завдання..." value="${text}" data-done="${doneData}">
             <button type="button" class="remove-item-btn"><i class="fas fa-times"></i></button>
           </div>
@@ -124,6 +124,57 @@ $(document).ready(function() {
   // Закриття модалки
   $('.mac-close').click(function() { $('.modal').css('display', 'none'); });
   $(window).click(function(event) { if ($(event.target).is('.modal')) $('.modal').css('display', 'none'); });
+
+
+  // Розгортання модального вікна
+  $('.mac-maximize').click(function(){
+    $('.modal-content').toggleClass('fullscreen');
+  });
+
+  // для логіки згортання вікна в мінімальне
+  $('.mac-minimize').click(function(){
+    $('.modal-content').addClass('minimized');
+  });
+
+  // Логіка перетягування вікна
+  let isDragging = false;                                         
+    let startX, startY, startLeft, startTop;                        
+                                                                    
+    // 1. Натиснули на мінімізоване вікно                           
+    $('.modal-content').on('mousedown', function(e) {               
+      if (!$(this).hasClass('minimized')) return; // тільки в мінімізованому стані                                              
+                                                                    
+      isDragging = true;                                            
+      startX = e.clientX;           // де курсор зараз              
+      startY = e.clientY;                                           
+      startLeft = $(this).offset().left;  // де вікно зараз         
+      startTop = $(this).offset().top;                              
+    });                                                             
+                                                                    
+    // 2. Рухаємо мишку                                             
+    $(document).on('mousemove', function(e) {                       
+      if (!isDragging) return;                                      
+                                                                    
+      let dx = e.clientX - startX;  // наскільки перемістився курсор                                                            
+      let dy = e.clientY - startY;                                  
+                                                                    
+      $('.modal-content').css({                                     
+        position: 'fixed',                                          
+        left: startLeft + dx,                                       
+        top: startTop + dy                                          
+      });                                                           
+    });                                                             
+                                                                    
+    // 3. Відпустили мишку                                          
+    $(document).on('mouseup', function() {                          
+      isDragging = false;                                           
+    }); 
+
+    $('.restore-btn').click(function() {                            
+        $('.modal-content').removeClass('minimized');                               
+        // повертаємо позицію в центр                                 
+      }); 
+
 
   // --- ЗБЕРЕЖЕННЯ ---
   $('#save-note-btn').click(function() {
