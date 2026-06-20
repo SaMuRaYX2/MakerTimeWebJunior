@@ -41,8 +41,51 @@ header {
   box-shadow: 0 10px 50px rgba(43, 148, 27, 0.872);
   display: flex;
   flex-direction: column;
+  transition: all 0.35s ease;
 }
 
+
+/* для fullscreen logic */
+.modal-content.fullscreen{
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  border-radius: 0;
+}
+
+/* Для minimize logic */
+
+.modal-content.minimized{
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.modal-content.modal-content.minimized > *{
+  display: none;
+}
+
+.restore-btn {                                                  
+  display: none;                                                
+  display: none;                                                
+  opacity: 0;                                                   
+  opacity: 0;                                                   
+  transition: opacity 0.2s ease;                                
+}
+
+.modal-content.minimized:hover {                                
+  height: 80px;         /* трохи збільшується */                
+  width: 220px;                                                 
+  transition: all 0.2s ease;                                    
+}
+
+/* Кнопка з'являється при hover */                              
+.modal-content.minimized:hover .restore-btn {                   
+  display: block;                                               
+  opacity: 1;                                                   
+}
 
 
 /* --- Плаваюча кнопка ПЛЮСИК --- */
@@ -164,7 +207,7 @@ span.mac-minimize{
 .modal-list-item { display: flex; align-items: baseline; margin-bottom: 10px; }
 .modal-list-item input[type="text"] { border: none; outline: none; width: 100%; font-size: 16px; padding: 5px 25px 5px 10px; }
 .modal-list-item .remove-item-btn { background: none; border: none; color: #e74c3c; font-size: 16px; margin-left: 10px; cursor: pointer; }
-#add-list-item-btn { background: none; border: none; color: #3498db; cursor: pointer; font-weight: 500; margin-top: 5px; text-align: left; }
+#add-list-item-btn { background: none; border: none; color: #bdda00; cursor: pointer; font-weight: 500; margin-top: 5px; text-align: left; }
 
 /* Відображення тексту з переносами та чекбоксів на екрані */
 .note-content-text { white-space: pre-wrap; font-size: 15px; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
