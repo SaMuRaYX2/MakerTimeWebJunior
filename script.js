@@ -142,7 +142,8 @@ $(document).ready(function() {
                                                                     
     // 1. Натиснули на мінімізоване вікно                           
     $('.modal-content').on('mousedown', function(e) {               
-      if (!$(this).hasClass('minimized')) return; // тільки в мінімізованому стані                                              
+      if (!$(this).hasClass('minimized')) return; // тільки в мінімізованому стані
+      if ($(e.target).closest('.restore-btn').length) return; // не перетягувати при кліку на restore
                                                                     
       isDragging = true;                                            
       startX = e.clientX;           // де курсор зараз              
@@ -170,10 +171,12 @@ $(document).ready(function() {
       isDragging = false;                                           
     }); 
 
-    $('.restore-btn').click(function() {                            
-        $('.modal-content').removeClass('minimized');                               
-        // повертаємо позицію в центр                                 
-      }); 
+    // Клік на кнопку restore — повертаємо вікно до нормального стану
+    $(document).on('click', '.restore-btn', function() {
+      $('.modal-content').removeClass('minimized');
+      // скидаємо позицію щоб вікно знову було по центру
+      $('.modal-content').css({ position: '', left: '', top: '' });
+    });
 
 
   // --- ЗБЕРЕЖЕННЯ ---
